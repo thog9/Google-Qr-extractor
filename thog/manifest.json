@@ -1,0 +1,52 @@
+{
+  "manifest_version": 3,
+  "name": "Thog · Google QR Extractor",
+  "version": "1.2.0",
+  "description": "Switch Google's mandatory cross-device QR verification back to the standard 6-digit SMS / Voice flow. Thog UI with EN / VI / 中文.",
+  "permissions": [
+    "declarativeNetRequest",
+    "declarativeNetRequestWithHostAccess",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://accounts.google.com/*",
+    "https://console.cloud.google.com/*",
+    "https://g.co/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Thog · Google QR Extractor",
+    "default_icon": {
+      "16": "icons/16.png",
+      "48": "icons/48.png",
+      "128": "icons/128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://accounts.google.com/*"
+      ],
+      "js": ["ipad-spoof.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "https://accounts.google.com/*",
+        "https://console.cloud.google.com/*"
+      ],
+      "js": ["qr-panel.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
